@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | Muhammad Aqeel Nuruzzaman</title>
+    <style>
+        /* --- CSS VARIABLES & THEMES --- */
+        :root {
+            --primary: #0070f3;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --card: #f8f9fa;
+            --border: #eaeaea;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Variabel saat Dark Mode aktif */
+        [data-theme="dark"] {
+            --bg: #0a0a0a;
+            --text: #f4f4f4;
+            --card: #161616;
+            --border: #222;
+            --nav-bg: rgba(10, 10, 10, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 2000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Toggle Switch Style */
+        #theme-toggle {
+            cursor: pointer;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8%;
+        }
+
+        .typewriter-container {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: inline-block;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    background-color: var(--primary);
+    margin-left: 2px;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { from { border-color: transparent } to { border-color: var(--primary) } }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin: 10px 0;
+            line-height: 1.1;
+        }
+
+        /* --- ANIMASI SCROLL REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- CONTENT STYLING --- */
+        section { padding: 80px 8%; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .edu-item {
+            border-left: 2px solid var(--primary);
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body data-theme="dark"> <nav>
+        <a href="#" class="logo">QEEL.</a>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#projek">Projek</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <button id="theme-toggle">MODE</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="typewriter-container">
+    <span id="typewriter-text"></span><span class="cursor">|</span>
+</div>
+        <h1>Muhammad <br>Aqeel Nuruzzaman</h1>
+        <p style="max-width: 500px; color: #888;">Fokus pada riset teknologi terapan, pengolahan data matematika, dan kepemimpinan di lapangan basket.</p>
+    </header>
+
+    <section id="projek" class="reveal">
+        <h2 style="margin-bottom: 30px;">Pencapaian Utama</h2>
+        <div class="grid">
+            <div class="card">
+                <span style="font-size: 0.8rem; color: var(--primary);">01. RISET</span>
+                <h3 style="margin: 10px 0;">Silver Medal ISRC 2026</h3>
+                <p>Inovasi dalam ajang Indonesian Student Research Competition di bidang teknologi terapan.</p>
+            </div>
+            <div class="card">
+                <span style="font-size: 0.8rem; color: var(--primary);">02. AKADEMIK</span>
+                <h3 style="margin: 10px 0;">Math Enthusiast</h3>
+                <p>Ratusan medali kompetisi akademik, memperkuat basis logika untuk Teknik Elektro.</p>
+            </div>
+            <div class="card">
+                <span style="font-size: 0.8rem; color: var(--primary);">03. OLAHRAGA</span>
+                <h3 style="margin: 10px 0;">Basket</h3>
+                <p>Belasan medali kejuaraan basket, melatih kerja sama tim dan strategi di bawah tekanan.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="reveal">
+    <h2>Visual Journey</h2>
+    <div class="grid" style="margin-top: 30px;">
+        <div class="card p-0" style="overflow: hidden;">
+            <img src="photos/ISRC.jpg" alt="ISRC Award" style="width:100%; height:200px; object-fit:cover;">
+            <p style="padding:10px; font-size:0.8rem; text-align:center;">Silver Medal at Indonesian Student Research Competition</p>
+        </div>
+        
+        <div class="card p-0" style="overflow: hidden;">
+            <img src="photos/Melo.webp" alt="Basketball Match" style="width:100%; height:200px; object-fit:cover;">
+            <p style="padding:10px; font-size:0.8rem; text-align:center;">Loves Basketball a lot</p>
+        </div>
+
+        <div class="card p-0" style="overflow: hidden;">
+            <img src="photos/MAN IC.jpg" alt="MAN IC Serpong" style="width:100%; height:200px; object-fit:cover;">
+            <p style="padding:10px; font-size:0.8rem; text-align:center;">MAN Insan Cendekia - My High School</p>
+        </div>
+
+        <div class="card p-0" style="overflow: hidden;">
+            <img src="photos/ITB.jpg" alt="ITB Campus" style="width:100%; height:200px; object-fit:cover;">
+            <p style="padding:10px; font-size:0.8rem; text-align:center;">Electrical Engineering ITB - My current Journey</p>
+        </div>
+
+        <div class="card p-0" style="overflow: hidden;">
+            <img src="photos/MIT.jpg" alt="Dream University" style="width:100%; height:200px; object-fit:cover;">
+            <p style="padding:10px; font-size:0.8rem; text-align:center;">Massachusetts Institute of Technology - My next dream</p>
+        </div>
+    </div>
+</section>
+
+    <section id="about" class="reveal">
+        <h2>About & Education</h2>
+        <div class="grid" style="align-items: start;">
+            <div>
+                <p>Email:<br><strong>muhammad.aqeel1349@smp.belajar.id</strong><br><strong>aqeelnuruzzaman2012@gmail.com</strong></p>
+                <br>
+                <p>Berasal dari Tangerang, saya mengejar keunggulan melalui sains dan olahraga. Kini fokus mendalami sistem kelistrikan di ITB.</p>
+            </div>
+            <div>
+                <div class="edu-item"><strong>ITB</strong> - Teknik Elektro</div>
+                <div class="edu-item"><strong>MAN Insan Cendekia Serpong</strong></div>
+                <div class="edu-item"><strong>SMPIT As-Syifa Boarding School</strong></div>
+                <div class="edu-item"><strong>SDIT Al-Fatih 1 Tangerang</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Muhammad Aqeel Nuruzzaman</p>
+    </footer>
+
+    <script>
+        // --- LOGIKA DARK MODE ---
+        const toggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                toggleBtn.innerText = "DARK";
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                toggleBtn.innerText = "LIGHT";
+            }
+        });
+
+        // --- LOGIKA SCROLL REVEAL ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        const textElement = document.getElementById("typewriter-text");
+const text = "Electrical Engineering @ ITB";
+let index = 0;
+let isDeleting = false;
+let speed = 150;
+
+function typeEffect() {
+    const currentDisplay = text.substring(0, index);
+    textElement.innerText = currentDisplay;
+
+    if (!isDeleting && index < text.length) {
+        index++;
+        speed = 150; // Kecepatan ngetik
+    } else if (isDeleting && index > 0) {
+        index--;
+        speed = 100; // Kecepatan hapus (lebih cepat)
+    } else {
+        isDeleting = !isDeleting;
+        speed = (isDeleting) ? 1000 : 500; // Jeda di ujung teks
+    }
+
+    setTimeout(typeEffect, speed);
+}
+
+// Jalankan fungsi saat halaman dimuat
+document.addEventListener("DOMContentLoaded", typeEffect);
+    </script>
+</body>
+</html>
