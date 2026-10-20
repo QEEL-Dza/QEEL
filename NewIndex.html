@@ -179,37 +179,52 @@
         }
 
         .compass-ring {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            position: relative;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px rgba(0, 112, 243, 0.2);
-        }
+           width: 220px;
+           height: 220px;
+           border-radius: 50%;
+          border: 4px solid var(--primary);
+    position: relative;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 112, 243, 0.2);
+}
 
-        .compass-dial {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            transition: transform 0.2s ease-out;
-        }
+.compass-dial {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform 0.1s linear;
+}
 
-        .pointer-qibla {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 30px solid #22c55e; /* Hijau penunjuk Ka'bah */
-        }
+/* Tanda arah Utara pada dial */
+.compass-dial::before {
+    content: "N";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+/* Jarum penunjuk Kiblat (Hijau) */
+.pointer-qibla {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 25px solid #22c55e;
+    /* Putar dengan sumbu di tengah lingkaran kompas */
+    transform-origin: 50% 100px;
+    transition: transform 0.2s ease-out;
+}
 
         .qibla-btn {
             background: var(--primary);
@@ -289,11 +304,11 @@
         
         <div class="qibla-container">
             <div class="compass-ring">
-                <div class="compass-dial" id="compass-dial">
-                    <div class="pointer-qibla" title="Arah Ka'bah"></div>
-                </div>
-                <div style="font-weight: bold; font-size: 1.2rem;" id="qibla-angle">--°</div>
-            </div>
+             <div class="compass-dial" id="compass-dial">
+             <div class="pointer-qibla" id="pointer-qibla" title="Arah Ka'bah"></div>
+         </div>
+    <div style="font-weight: bold; font-size: 1.2rem;" id="qibla-angle">--°</div>
+</div>
             <p id="qibla-status" style="font-size: 0.85rem; color: #888;">Klik tombol untuk mengaktifkan kompas & geolokasi.</p>
             <button class="qibla-btn" onclick="initQibla()">Aktifkan Kompas Kiblat</button>
         </div>
@@ -413,21 +428,20 @@
 
         document.addEventListener("DOMContentLoaded", typeEffect);
 
-        // --- LOGIKA KIBLAT DIGITAL ---
+        // --- LOGIKA KIBLAT DIGITAL (FIXED) ---
         let qiblaBearing = 0;
 
-        function calculateQibla(latitude, longitude) {
-            // Koordinat Ka'bah Makkah
+        function calculateQibla(userLatDeg, userLngDeg) {
             const kaabaLat = 21.422487 * (Math.PI / 180);
             const kaabaLng = 39.826206 * (Math.PI / 180);
 
-            const userLat = latitude * (Math.PI / 180);
-            const userLng = longitude * (Math.PI / 180);
+            const userLat = userLatDeg * (Math.PI / 180);
+            const userLng = userLngDeg * (Math.PI / 180);
 
             const dLng = kaabaLng - userLng;
 
-            const y = Math.sin(dLng);
-            const x = Math.cos(userLat) * Math.tan(kaabaLat) - Math.sin(userLat) * Math.cos(dLng);
+            const y = Math.sin(dLng) * Math.cos(kaabaLat);
+            const x = Math.cos(userLat) * Math.sin(kaabaLat) - Math.sin(userLat) * Math.cos(kaabaLat) * Math.cos(dLng);
 
             let qibla = Math.atan2(y, x) * (180 / Math.PI);
             return (qibla + 360) % 360;
@@ -441,18 +455,29 @@
                 navigator.geolocation.getCurrentPosition(position => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
+                    
                     qiblaBearing = calculateQibla(lat, lng);
                     
-                    document.getElementById('qibla-angle').innerText = Math.round(qiblaBearing) + "° NW";
-                    statusText.innerText = "Lokasi terdeteksi. Gerakkan HP/perangkat Anda.";
+                    document.getElementById('qibla-angle').innerText = Math.round(qiblaBearing) + "° dari Utara";
+                    
+                    const pointer = document.getElementById('pointer-qibla');
+                    pointer.style.transform = `translateX(-50%) rotate(${qiblaBearing}deg)`;
+                    
+                    statusText.innerText = "Lokasi terdeteksi! (Arah Kiblat terhitung dari Utara)";
 
                     if (window.DeviceOrientationEvent) {
-                        window.addEventListener('deviceorientation', handleOrientation, true);
-                    } else {
-                        statusText.innerText = "Perangkat tidak mendukung kompas giroskop.";
+                        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                            DeviceOrientationEvent.requestPermission().then(response => {
+                                if (response === 'granted') {
+                                    window.addEventListener('deviceorientation', handleOrientation, true);
+                                }
+                            });
+                        } else {
+                            window.addEventListener('deviceorientation', handleOrientation, true);
+                        }
                     }
                 }, error => {
-                    statusText.innerText = "Gagal mengakses lokasi. Izinkan akses GPS.";
+                    statusText.innerText = "Gagal mengakses GPS. Izinkan lokasi di browser.";
                 });
             } else {
                 statusText.innerText = "Geolokasi tidak didukung oleh browser Anda.";
@@ -460,16 +485,23 @@
         }
 
         function handleOrientation(event) {
-            let heading = event.alpha; // Nilai arah kompas perangkat
+            let alpha = event.alpha; 
+            
             if (event.webkitCompassHeading) {
-                heading = event.webkitCompassHeading; // Khusus iOS Safari
+                alpha = event.webkitCompassHeading;
             }
 
-            if (heading !== null) {
+            if (alpha !== null && alpha !== undefined) {
+                let heading = alpha; 
+                if (!event.webkitCompassHeading) {
+                    heading = (360 - alpha) % 360; 
+                }
+
                 const dial = document.getElementById('compass-dial');
-                // Rotasi penunjuk kiblat relatif terhadap orientasi HP
-                const rotation = qiblaBearing - heading;
-                dial.style.transform = `rotate(${rotation}deg)`;
+                const pointer = document.getElementById('pointer-qibla');
+                
+                dial.style.transform = `rotate(${-heading}deg)`;
+                pointer.style.transform = `translateX(-50%) rotate(${qiblaBearing}deg)`;
             }
         }
     </script>
