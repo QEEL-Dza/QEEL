@@ -15,7 +15,6 @@
             --nav-bg: rgba(255, 255, 255, 0.8);
         }
 
-        /* Variabel saat Dark Mode aktif */
         [data-theme="dark"] {
             --bg: #0a0a0a;
             --text: #f4f4f4;
@@ -81,7 +80,6 @@
             font-size: 0.9rem;
         }
 
-        /* Toggle Switch Style */
         #theme-toggle {
             cursor: pointer;
             background: var(--primary);
@@ -129,7 +127,6 @@
             line-height: 1.1;
         }
 
-        /* --- ANIMASI SCROLL REVEAL --- */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -141,7 +138,6 @@
             transform: translateY(0);
         }
 
-        /* --- CONTENT STYLING --- */
         section { padding: 80px 8%; }
 
         .grid {
@@ -163,7 +159,7 @@
             margin-bottom: 15px;
         }
 
-        /* --- KIBLAT DIGITAL STYLING --- */
+        /* --- KIBLAT DIGITAL STYLING (AKURAT) --- */
         .qibla-container {
             display: flex;
             flex-direction: column;
@@ -173,73 +169,90 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 40px 20px;
-            max-width: 500px;
+            padding: 30px 20px;
+            max-width: 450px;
             margin: 0 auto;
         }
 
         .compass-ring {
-           width: 220px;
-           height: 220px;
-           border-radius: 50%;
-          border: 4px solid var(--primary);
-    position: relative;
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 15px rgba(0, 112, 243, 0.2);
-}
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            position: relative;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 20px rgba(0, 112, 243, 0.15);
+        }
 
-.compass-dial {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    transition: transform 0.1s linear;
-}
+        /* Lingkaran Kompas (N, E, S, W) */
+        .compass-dial {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: transform 0.1s linear;
+        }
 
-/* Tanda arah Utara pada dial */
-.compass-dial::before {
-    content: "N";
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: bold;
-    color: var(--primary);
-    font-size: 0.9rem;
-}
+        /* Arah Angin */
+        .compass-mark {
+            position: absolute;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .compass-mark.n { top: 8px; left: 50%; transform: translateX(-50%); color: #ef4444; }
+        .compass-mark.e { right: 10px; top: 50%; transform: translateY(-50%); color: #888; }
+        .compass-mark.s { bottom: 8px; left: 50%; transform: translateX(-50%); color: #888; }
+        .compass-mark.w { left: 10px; top: 50%; transform: translateY(-50%); color: #888; }
 
-/* Jarum penunjuk Kiblat (Hijau) */
-.pointer-qibla {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 25px solid #22c55e;
-    /* Putar dengan sumbu di tengah lingkaran kompas */
-    transform-origin: 50% 100px;
-    transition: transform 0.2s ease-out;
-}
+        /* Jarum Penunjuk Ka'bah */
+        .pointer-qibla {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 100px;
+            margin-left: -2px;
+            margin-top: -100px;
+            transform-origin: bottom center;
+            transition: transform 0.3s ease-out;
+            z-index: 10;
+        }
+
+        .pointer-qibla::after {
+            content: "🕋";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+        }
+
+        .pointer-qibla::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 25px solid #22c55e;
+        }
 
         .qibla-btn {
             background: var(--primary);
             color: #fff;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 600;
             margin-top: 15px;
-            transition: opacity 0.2s;
-        }
-
-        .qibla-btn:hover {
-            opacity: 0.9;
         }
 
         footer {
@@ -256,13 +269,11 @@
         <a href="#" class="logo">NEWQEEL.</a>
         <div class="nav-right">
             <ul class="nav-links">
-                <li><a href="index.html">-Old Home-</a></li>
                 <li><a href="tgs1.html">Task</a></li>
                 <li><a href="#projek">Projek</a></li>
                 <li><a href="#kiblat">Kiblat</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="song.html">Song</a></li>
             </ul>
             <button id="theme-toggle">MODE</button>
         </div>
@@ -300,17 +311,21 @@
     <!-- SECTION KIBLAT DIGITAL -->
     <section id="kiblat" class="reveal">
         <h2 style="text-align: center; margin-bottom: 10px;">Kiblat Digital</h2>
-        <p style="text-align: center; color: #888; margin-bottom: 30px;">Fitur penunjuk arah Kiblat terintegrasi berdasarkan lokasi Anda.</p>
+        <p style="text-align: center; color: #888; margin-bottom: 30px;">Penunjuk arah Kiblat terintegrasi berdasarkan lokasi GPS Anda.</p>
         
         <div class="qibla-container">
             <div class="compass-ring">
-             <div class="compass-dial" id="compass-dial">
-             <div class="pointer-qibla" id="pointer-qibla" title="Arah Ka'bah"></div>
-         </div>
-    <div style="font-weight: bold; font-size: 1.2rem;" id="qibla-angle">--°</div>
-</div>
-            <p id="qibla-status" style="font-size: 0.85rem; color: #888;">Klik tombol untuk mengaktifkan kompas & geolokasi.</p>
-            <button class="qibla-btn" onclick="initQibla()">Aktifkan Kompas Kiblat</button>
+                <div class="compass-dial" id="compass-dial">
+                    <span class="compass-mark n">N</span>
+                    <span class="compass-mark e">E</span>
+                    <span class="compass-mark s">S</span>
+                    <span class="compass-mark w">W</span>
+                    <div class="pointer-qibla" id="pointer-qibla" title="Arah Ka'bah"></div>
+                </div>
+                <div style="font-weight: bold; font-size: 1.3rem; z-index: 20;" id="qibla-angle">--°</div>
+            </div>
+            <p id="qibla-status" style="font-size: 0.85rem; color: #888;">Klik tombol di bawah untuk mendeteksi posisi & arah Kiblat.</p>
+            <button class="qibla-btn" onclick="initQibla()">Cari Arah Kiblat</button>
         </div>
     </section>
 
@@ -428,10 +443,11 @@
 
         document.addEventListener("DOMContentLoaded", typeEffect);
 
-        // --- LOGIKA KIBLAT DIGITAL (FIXED) ---
+        // --- LOGIKA KIBLAT DIGITAL (RUMUS GEODESIK SPERIS RESMI) ---
         let qiblaBearing = 0;
 
         function calculateQibla(userLatDeg, userLngDeg) {
+            // Koordinat Presisi Ka'bah Makkah
             const kaabaLat = 21.422487 * (Math.PI / 180);
             const kaabaLng = 39.826206 * (Math.PI / 180);
 
@@ -440,31 +456,34 @@
 
             const dLng = kaabaLng - userLng;
 
-            const y = Math.sin(dLng) * Math.cos(kaabaLat);
-            const x = Math.cos(userLat) * Math.sin(kaabaLat) - Math.sin(userLat) * Math.cos(kaabaLat) * Math.cos(dLng);
+            // Rumus Great Circle Bearing
+            const y = Math.sin(dLng);
+            const x = Math.cos(userLat) * Math.tan(kaabaLat) - Math.sin(userLat) * Math.cos(dLng);
 
             let qibla = Math.atan2(y, x) * (180 / Math.PI);
-            return (qibla + 360) % 360;
+            return (qibla + 360) % 360; // Nilai 0° - 360° searah jarum jam dari Utara
         }
 
         function initQibla() {
             const statusText = document.getElementById('qibla-status');
             
             if ("geolocation" in navigator) {
-                statusText.innerText = "Mendapatkan lokasi...";
+                statusText.innerText = "Mendapatkan lokasi GPS...";
                 navigator.geolocation.getCurrentPosition(position => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     
                     qiblaBearing = calculateQibla(lat, lng);
                     
-                    document.getElementById('qibla-angle').innerText = Math.round(qiblaBearing) + "° dari Utara";
+                    document.getElementById('qibla-angle').innerText = Math.round(qiblaBearing) + "°";
                     
+                    // Arahkan jarum Ka'bah ke derajat Kiblat
                     const pointer = document.getElementById('pointer-qibla');
-                    pointer.style.transform = `translateX(-50%) rotate(${qiblaBearing}deg)`;
+                    pointer.style.transform = `rotate(${qiblaBearing}deg)`;
                     
-                    statusText.innerText = "Lokasi terdeteksi! (Arah Kiblat terhitung dari Utara)";
+                    statusText.innerText = `Sudut Kiblat: ${Math.round(qiblaBearing)}° dari Utara (Barat Laut).`;
 
+                    // Cek sensor orientasi HP
                     if (window.DeviceOrientationEvent) {
                         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
                             DeviceOrientationEvent.requestPermission().then(response => {
@@ -477,31 +496,24 @@
                         }
                     }
                 }, error => {
-                    statusText.innerText = "Gagal mengakses GPS. Izinkan lokasi di browser.";
+                    statusText.innerText = "Gagal mengakses lokasi. Pastikan izin GPS aktif!";
                 });
             } else {
-                statusText.innerText = "Geolokasi tidak didukung oleh browser Anda.";
+                statusText.innerText = "Browser tidak mendukung Geolokasi.";
             }
         }
 
         function handleOrientation(event) {
-            let alpha = event.alpha; 
+            let heading = event.alpha; 
             
             if (event.webkitCompassHeading) {
-                alpha = event.webkitCompassHeading;
+                heading = event.webkitCompassHeading; // Untuk iOS
             }
 
-            if (alpha !== null && alpha !== undefined) {
-                let heading = alpha; 
-                if (!event.webkitCompassHeading) {
-                    heading = (360 - alpha) % 360; 
-                }
-
+            if (heading !== null && heading !== undefined) {
                 const dial = document.getElementById('compass-dial');
-                const pointer = document.getElementById('pointer-qibla');
-                
+                // Putar piringan kompas berlawanan arah gerakan HP agar 'N' tetap menunjuk Utara asli
                 dial.style.transform = `rotate(${-heading}deg)`;
-                pointer.style.transform = `translateX(-50%) rotate(${qiblaBearing}deg)`;
             }
         }
     </script>
